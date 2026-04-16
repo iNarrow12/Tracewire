@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TraceWire | Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div id="app" class="glass-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <div class="logo">
+                    <i data-lucide="activity" class="logo-icon"></i>
+                    <span>TraceWire</span>
+                </div>
+                <button id="btn-settings" class="icon-btn" title="Authentication Settings"><i
+                        data-lucide="key"></i></button>
+            </header>
+
+            <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="agent-search" placeholder="Search agents...">
+            </div>
+
+            <nav class="agent-list" id="agent-list">
+                <!-- JS Injected Cards -->
+            </nav>
+
+            <footer class="sidebar-footer">
+                <div class="footer-info">
+                    <span class="version">v2.0.0</span>
+                    <span class="status-indicator">● System Online</span>
+                </div>
+            </footer>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="no-selection" class="empty-state">
+                <div class="placeholder-ring">
+                    <i data-lucide="radar" class="placeholder-icon"></i>
+                </div>
+                <h2>Waiting for Selection</h2>
+                <p>Choose an agent from the sidebar to view live telemetry.</p>
+            </div>
+
+            <div id="dashboard" class="dashboard-grid hidden">
+                <!-- Header Card -->
+                <section class="dash-item header-card glass">
+                    <div class="agent-brand">
+                        <h1 id="active-name">Loading...</h1>
+                        <code id="active-id">#ID-0000</code>
+                    </div>
+                    <div class="agent-status-pills">
+                        <div class="status-pill">
+                            <i data-lucide="clock"></i>
+                            <span id="active-last-seen">-</span>
+                        </div>
+                        <div class="status-pill">
+                            <i data-lucide="map-pin"></i>
+                            <span id="active-location-summary">-</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Map View - now full width -->
+                <section class="dash-item map-card glass">
+                    <div id="map"></div>
+                </section>
+
+                <!-- Unified System & Energy Card -->
+                <section class="dash-item system-card glass">
+                    <div class="card-header">
+                        <h3><i data-lucide="monitor"></i> System & Hardware</h3>
+                        <span id="bat-status" class="badge">Checking...</span>
+                    </div>
+
+                    <div class="energy-visual">
+                        <div id="bat-fill" class="bat-level" style="width: 0%"></div>
+                        <span id="bat-percent">0%</span>
+                    </div>
+
+                    <div class="info-table">
+                        <div class="info-row"><span>Username</span><b id="sys-user">-</b></div>
+                        <div class="info-row"><span>Platform</span><b id="sys-platform">-</b></div>
+                        <div class="info-row"><span>OS Version</span><b id="sys-os">-</b></div>
+                        <div class="info-row"><span>Public IP</span><b id="sys-ip">-</b></div>
+                        <div class="info-row"><span>MAC Address</span><b id="sys-mac">-</b></div>
+                        <div class="info-row"><span>Power Plan</span><b id="sys-plan">-</b></div>
+                    </div>
+                </section>
+
+                <!-- Power Center -->
+                <section class="dash-item control-card glass">
+                    <div class="card-header">
+                        <h3><i data-lucide="zap"></i> Remote Control</h3>
+                    </div>
+                    <div class="control-grid">
+                        <button class="ctrl-btn" data-cmd="lock">
+                            <i data-lucide="lock"></i>
+                            <span>Lock Session</span>
+                        </button>
+                        <button class="ctrl-btn" data-cmd="sleep">
+                            <i data-lucide="moon"></i>
+                            <span>Set Sleep</span>
+                        </button>
+                        <button class="ctrl-btn cmd-warn" data-cmd="restart">
+                            <i data-lucide="refresh-cw"></i>
+                            <span>Restart OS</span>
+                        </button>
+                        <button class="ctrl-btn cmd-danger" data-cmd="shutdown">
+                            <i data-lucide="power"></i>
+                            <span>Shutdown</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Activity Log / History -->
+                <section class="dash-item history-card glass">
+                    <div class="card-header">
+                        <h3><i data-lucide="history"></i> Location History</h3>
+                    </div>
+                    <ul id="location-history" class="history-list">
+                        <!-- JS injected -->
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal glass">
+            <i data-lucide="shield-check" class="auth-icon"></i>
+            <h2>Authentication Required</h2>
+            <p>Enter the server management token to unlock the command center.</p>
+            <input type="password" id="auth-token" placeholder="••••••••">
+            <button id="btn-login" class="primary-btn">Connect Controller</button>
+        </div>
+    </div>
+
+    <!-- Keep your original script.js - untouched -->
+    <script src="script.js"></script>
+</body>
+
+</html>
