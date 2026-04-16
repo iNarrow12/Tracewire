@@ -29,7 +29,16 @@ The system is ideal for:
 
 ## `$ Screenshots`
 
-*(Add screenshots of the admin panel dashboard, agent list, or location map here once deployed)*
+<div align="center">
+  
+### `$ Admin Panel`
+![Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/admin_panle.png)
+### `$ Devices in Admin Panel`
+![Devices in Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/image.png)
+### `$ Docs`
+![Docs](https://github.com/iNarrow12/Tracewire/blob/main/src/docs-nomal.png)
+
+</div>
 
 ---
 
