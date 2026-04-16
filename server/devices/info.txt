@@ -1,0 +1,1 @@
+This the folder the all devices informations are saved
