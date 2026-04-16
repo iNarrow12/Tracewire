@@ -37,6 +37,8 @@ The system is ideal for:
 ![Devices in Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/admin_panle.png)
 ### `$ Interactive API Docs`
 ![Docs](https://github.com/iNarrow12/Tracewire/blob/main/src/docs-nomal.png)
+### `$ Alternative ReDoc API docs`
+![ReDocs](https://github.com/iNarrow12/Tracewire/blob/main/src/Screenshot%202026-04-16%20151543.png?raw=true)
 
 </div>
 
