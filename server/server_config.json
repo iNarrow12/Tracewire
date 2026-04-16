@@ -1,7 +1,7 @@
 {
   "host": "0.0.0.0",
   "port": 8000,
-  "password": "idk",
+  "password": "admin",
   "max_location_history": 5,
   "location_history_interval": 15
 }
