@@ -1,7 +1,7 @@
 {
-  "agent_name": "DESKTOP-HRIQ9LH",
+  "agent_name": "",
   "server": "ws://127.0.0.1:8000/ws",
-  "password": "idk",
+  "password": "admin",
   "update_interval": 1,
-  "agent_id": "aa0fcd64-5ad7-4651-870d-9992ee593416"
+  "agent_id": ""
 }
