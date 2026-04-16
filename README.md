@@ -1,6 +1,3 @@
-I've updated the README to reflect your notes. The "Expose Publicly" section has been removed entirely. The default server password is now shown as `admin` (users are still warned to change it). A clear disclaimer about pre‑release status and educational use has been added.
-
-
 <div align="center">
 
 ![header](https://capsule-render.vercel.app/api?type=waving&height=300&text=TraceWire&textBg=false&fontColor=ffff&fontAlignY=42)
@@ -24,7 +21,7 @@ The system is ideal for:
 - Building custom location‑aware automation
 
 > **⚠️ IMPORTANT**  
-> This is a **pre‑release version**. It currently supports only unencrypted `ws://` connections (`wss://` is not yet implemented).  
+> This is a **pre‑release version**. It currently supports only unencrypted `ws://` connections (`wss://` is not yet implemented). Therefore, it is **not recommended for production use** over the open internet.  
 > TraceWire includes full location tracking and remote control capabilities – **use only on devices you own or have explicit permission to monitor**.  
 > The project is intended for **educational purposes and authorized internal network monitoring**.
 
@@ -42,7 +39,7 @@ The system is ideal for:
 tracewire/
 ├── agent/
 │   ├── modules/
-│   │   ├── location.py          # Windows native + IP‑based geolocation
+│   │   ├── location.py          # Windows native (WinRT) + IP‑based geolocation
 │   │   ├── power_options.py     # OS power commands & scheduling
 │   │   └── system_info.py       # Hardware, battery, and public IP telemetry
 │   ├── agent.py                 # WebSocket client core
@@ -66,7 +63,7 @@ tracewire/
 | **Real‑time Telemetry** | Agents send system info (OS, battery, IP, MAC) and location on a configurable interval. |
 | **Bi‑directional WebSocket** | Server pushes commands instantly to connected agents – no polling needed. |
 | **Persistent State** | Each agent’s data is saved to `devices/<agent_id>.json` and survives server restarts. |
-| **Location Breadcrumbs** | Records location changes only after a minimum time interval (`location_history_interval`) to avoid bloat. History is capped at `max_location_history`. |
+| **Location Breadcrumbs** | Records location changes only after a minimum time interval (`location_history_interval`) to avoid bloat. History is capped at `max_location_history`. On Windows, it uses the **native Geolocation API** for higher accuracy; falls back to IP geolocation otherwise. |
 | **Secure Authentication** | Agent handshake includes a password; all REST endpoints require an `X-Password` header. |
 | **Power Control Suite** | Immediate shutdown, restart, sleep, hibernate, lock, plus **scheduled** actions at precise ISO timestamps. |
 | **Cross‑Platform Agent** | Windows native geolocation (WinRT) with IP‑based fallback. Linux/macOS can use IP‑only out‑of‑the‑box. |
@@ -172,52 +169,65 @@ The agent will connect automatically, send its telemetry, and await commands.
 
 ---
 
-## `$ Agent Telemetry Payload (Example)`
+## `$ Data Format (Server‑Side Storage)`
+
+Each agent’s data is stored as a JSON file inside `server/devices/`. Below is an example (with **fake, randomized values**) showing the actual structure saved by the server:
 
 ```json
 {
-  "agent_id": "aa0fcd64-5ad7-4651-870d-9992ee593416",
-  "agent_name": "DESKTOP-HRIQ9LH",
-  "password": "admin",
+  "agent_id": "3f7e9a2b-8c1d-4e5f-9a6b-7c8d9e0f1a2b",
+  "agent_name": "DESKTOP-ABC123",
+  "agent_device_name": "DESKTOP-ABC123",
+  "agent_status": {
+    "last_seen": "2026-04-16T10:15:30.123456Z",
+    "lat": 40.7128,
+    "lon": -74.0060
+  },
   "system_info": {
-    "username": "User",
+    "username": "johndoe",
     "platform": "Windows",
     "os_version": "10.0.22631",
     "mac_address": "00:1A:2B:3C:4D:5E",
-    "ipv4": "203.0.113.45",
-    "battery": { "percent": 87, "charging": true, "time_left": null },
+    "ipv4": "192.0.2.123",
+    "ipv6": null,
+    "battery": {
+      "percent": 85,
+      "charging": false,
+      "time_left": 7200
+    },
     "power_plan": "Balanced"
   },
-  "location": {
-    "latitude": 40.7128,
-    "longitude": -74.0060,
-    "city": "New York",
-    "region": "NY",
-    "country": "United States",
-    "accuracy": 50,
-    "source": "ip-api",
-    "timestamp": "2025-03-15T14:32:00Z"
-  }
+  "modules": {
+    "lock": false,
+    "restart": false,
+    "shutdown": false,
+    "sleep": false,
+    "hibernate": false,
+    "schedule_shutdown": null,
+    "schedule_restart": null,
+    "cancel_schedule": false
+  },
+  "location_history": [
+    {
+      "timestamp": "2026-04-16T10:14:00.000001Z",
+      "lat": 40.7127,
+      "lon": -74.0059,
+      "map": "https://maps.google.com/?q=40.7127,-74.0059"
+    },
+    {
+      "timestamp": "2026-04-16T10:15:00.000002Z",
+      "lat": 40.7128,
+      "lon": -74.0060,
+      "map": "https://maps.google.com/?q=40.7128,-74.0060"
+    }
+  ]
 }
 ```
 
----
-
-## `$ Database Structure`
-
-Agent data is stored as JSON files under `server/devices/`:
-
-```
-devices/
-└── aa0fcd64-5ad7-4651-870d-9992ee593416.json
-```
-
-Each file contains:
-- Agent metadata (`agent_id`, `agent_name`, `agent_device_name`)
-- Current status (`last_seen`, `lat`, `lon`)
-- Full `system_info` snapshot
-- Pending command flags (`modules.lock`, `modules.shutdown`, etc.)
-- **`location_history`** array with timestamp, coordinates, and a Google Maps link.
+**Key points:**
+- `agent_status` holds the **latest** location and last‑seen timestamp.
+- `location_history` is a rolling buffer of location records, each including a Google Maps link.
+- `modules` contains pending command flags – these are cleared automatically after the command is sent to the agent.
 
 ---
 
