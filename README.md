@@ -96,16 +96,28 @@ tracewire/
 
 ## `$ Installation`
 
+### **Server Dependencies**
+
+```bash
+pip install fastapi uvicorn pydantic websockets aiohttp psutil
+```
+
+### **Agent Dependencies** (run on each monitored device)
+
+```bash
+pip install websockets aiohttp psutil
+```
+
+> **Windows only**: For native GPS accuracy, install the WinRT bindings:
+> ```bash
+> pip install winrt
+> ```
+
+### **Clone the Repository**
+
 ```bash
 git clone https://github.com/yourusername/tracewire.git
 cd tracewire
-
-# Server dependencies
-pip install fastapi uvicorn websockets aiohttp psutil
-
-# Agent dependencies (run on each monitored device)
-pip install websockets aiohttp psutil
-# On Windows only: pip install winrt  (for native geolocation)
 ```
 
 ---
@@ -240,4 +252,3 @@ MIT — Free for personal, educational, and commercial use.
 ![footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=100&section=footer)
 
 </div>
-```
