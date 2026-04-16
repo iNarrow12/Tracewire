@@ -210,7 +210,7 @@ Each agent’s data is stored as a JSON file inside `server/devices/`. Below is 
     "os_version": "10.0.22631",
     "mac_address": "00:1A:2B:3C:4D:5E",
     "ipv4": "192.0.2.123",
-    "ipv6": null,
+    "ipv6": "2351:3769:b6c4:7759e:678h:865k:hf6k:6584",
     "battery": {
       "percent": 85,
       "charging": false,
