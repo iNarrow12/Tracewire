@@ -1,6 +1,6 @@
 I've updated the README to reflect your notes. The "Expose Publicly" section has been removed entirely. The default server password is now shown as `admin` (users are still warned to change it). A clear disclaimer about pre‑release status and educational use has been added.
 
-```markdown
+
 <div align="center">
 
 ![header](https://capsule-render.vercel.app/api?type=waving&height=300&text=TraceWire&textBg=false&fontColor=ffff&fontAlignY=42)
