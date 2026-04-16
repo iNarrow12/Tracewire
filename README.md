@@ -35,7 +35,7 @@ The system is ideal for:
 ![Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/image.png)
 ### `$ Devices in Admin Panel`
 ![Devices in Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/admin_panle.png)
-### `$ Docs`
+### `$ Interactive API Docs`
 ![Docs](https://github.com/iNarrow12/Tracewire/blob/main/src/docs-nomal.png)
 
 </div>
@@ -58,6 +58,9 @@ tracewire/
 │   ├── modules/
 │   │   └── location_history.py  # Smart breadcrumb recording with interval/throttle
 │   ├── admin_panel/             # Static HTML dashboard
+│   │   ├── index.html           # Main admin interface
+│   │   ├── script.js            # Dashboard logic & API communication
+│   │   └── style.css            # Cyber‑inspired styling
 │   ├── server.py                # FastAPI app + WebSocket endpoint
 │   └── server_config.json       # Server settings (auth, port, max history)
 └── README.md
@@ -77,6 +80,7 @@ tracewire/
 | **Power Control Suite** | Immediate shutdown, restart, sleep, hibernate, lock, plus **scheduled** actions at precise ISO timestamps. |
 | **Cross‑Platform Agent** | Windows native geolocation (WinRT) with IP‑based fallback. Linux/macOS can use IP‑only out‑of‑the‑box. |
 | **Admin Dashboard** | Static HTML panel served at `/admin` – view agents, location history, and send commands. |
+| **Interactive API Docs** | Automatic Swagger UI at `/docs` – explore and test every endpoint. |
 
 ---
 
@@ -152,7 +156,13 @@ cd server
 python server.py
 ```
 
-The admin panel will be available at `http://your-server-ip:8000/admin`.
+### **Access Points**
+
+| URL | Description |
+|-----|-------------|
+| `http://your-server:8000/admin` | Admin dashboard (requires `X-Password`) |
+| `http://your-server:8000/docs` | Interactive Swagger API documentation |
+| `http://your-server:8000/redoc` | Alternative ReDoc API docs |
 
 ---
 
@@ -186,7 +196,7 @@ The agent will connect automatically, send its telemetry, and await commands.
 | | `location_history_interval` | Minimum seconds between location appends. |
 | `agent_config.json` | `update_interval` | How often (seconds) the agent pushes new data. |
 | | `server` | WebSocket URL (`ws://` only in this release). |
-| `index.html` (admin) | (static) | Modify the admin panel to match your branding. |
+| `admin_panel/index.html` | (static) | Modify the admin panel to match your branding. |
 
 ---
 
@@ -261,3 +271,4 @@ MIT — Free for personal, educational, and commercial use.
 ![footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,20,24&height=100&section=footer)
 
 </div>
+```
