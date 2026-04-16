@@ -32,9 +32,9 @@ The system is ideal for:
 <div align="center">
   
 ### `$ Admin Panel`
-![Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/admin_panle.png)
+![Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/image.png)
 ### `$ Devices in Admin Panel`
-![Devices in Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/image.png)
+![Devices in Admin Panel](https://github.com/iNarrow12/Tracewire/blob/main/src/admin_panle.png)
 ### `$ Docs`
 ![Docs](https://github.com/iNarrow12/Tracewire/blob/main/src/docs-nomal.png)
 
